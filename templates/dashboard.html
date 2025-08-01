@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Foydalanuvchi Sahifasi{% endblock title %}
+
+{% block content %}
+<div class="container mt-5 p-4 rounded" style="background-color: #1e1e1e; color: #28a745; max-width: 700px;">
+    <h2 class="text-center mb-4">👤 Siz haqingizda ma'lumot</h2>
+
+    <div class="row g-4">
+        <div class="col-12 text-center">
+            {% if profile.photo %}
+                <img src="{{ profile.photo.url }}" alt="User Photo" class="rounded-circle img-thumbnail shadow"
+                     style="width: 150px; height: 150px; object-fit: cover; border: 2px solid #28a745;">
+            {% else %}
+                <img src="{% static 'images/default-profile.png' %}" alt="Default Photo" class="rounded-circle img-thumbnail shadow"
+                     style="width: 150px; height: 150px; object-fit: cover; border: 2px solid #28a745;">
+            {% endif %}
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">👤 Username</label>
+            <input type="text" class="form-control" value="{{ user.username }}" readonly
+                   style="background-color: #121212; color: #28a745; border: 1px solid #28a745;">
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">📧 Email</label>
+            <input type="email" class="form-control" value="{{ user.email }}" readonly
+                   style="background-color: #121212; color: #28a745; border: 1px solid #28a745;">
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">📝 Ism</label>
+            <input type="text" class="form-control" value="{{ user.first_name }}" readonly
+                   style="background-color: #121212; color: #28a745; border: 1px solid #28a745;">
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">🧾 Familiya</label>
+            <input type="text" class="form-control" value="{{ user.last_name }}" readonly
+                   style="background-color: #121212; color: #28a745; border: 1px solid #28a745;">
+        </div>
+
+        <div class="col-12">
+            <label class="form-label">🧠 Bio</label>
+            <textarea class="form-control" rows="4" readonly
+                      style="background-color: #121212; color: #28a745; border: 1px solid #28a745;">{{ profile.bio }}</textarea>
+        </div>
+    </div>
+
+    {% if request.user == profile.user %}
+    <div class="d-grid gap-2 mt-4">
+        <a href="{% url 'password_change' %}" class="btn btn-success fw-bold">
+            🔑 Parolni o‘zgartirish
+        </a>
+        <a href="{% url 'logout' %}" class="btn btn-outline-success fw-bold">
+            🚪 Chiqish
+        </a>
+    </div>
+    {% endif %}
+
+    {% if jobs %}
+    <h3 class="text-center mt-5" style="color: #28a745;">🧳 Joylashtirilgan ishlar</h3>
+    <div class="row mt-4">
+        {% for job in jobs %}
+            {% if job.author == profile.user %}
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm border-0" style="border-radius: 10px;">
+                    <img src="{{ job.image.url }}" class="card-img-top" alt="Job image"
+                         style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <span class="text-success">{{ job.category.name }}</span>
+                        <h6 class="text-muted">{{ job.publish_time }}</h6>
+                        <h5><a href="{{ job.get_absolute_url }}" class="text-dark text-decoration-none">{{ job.title }}</a></h5>
+                        <p class="text-muted">💵 Maosh: {{ job.payment }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-center text-muted mt-5">🚫 Siz hali hech qanday ish joylashtirmagansiz.</p>
+    {% endif %}
+</div>
+{% endblock content %}

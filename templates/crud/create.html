@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Yangilik qo‘shish{% endblock title %}
+{% block content %}
+<div class="container mt-5 p-4 rounded" style="background-color: #1e1e1e; color: #28a745; max-width: 700px;">
+    <h2 class="text-center mb-4">📰 Yangilik qo‘shish</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.as_p }}
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn" style="background-color: #28a745; color: #000; font-weight: bold;">
+                ➕ Qo‘shish
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

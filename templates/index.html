@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<main style="background-color: #ffffff; color: #1a1a1a; font-family: 'Segoe UI', sans-serif;">
+
+    <!-- Trending Area Start -->
+    <div class="trending-area fix py-4">
+        <div class="container">
+            <div class="trending-main">
+                <!-- Trending Tittle -->
+                <div class="row mb-4">
+                    <div class="col-lg-12">
+                        <div class="trending-tittle text-center">
+                            <span style="background-color: #1e3d2f; color: #aaffcc; padding: 10px 20px; border-radius: 5px; font-weight: bold; font-size: 18px;">🔥 Trending Now</span>
+                            <div class="trending-animated mt-2">
+                                <ul id="js-news" class="js-hidden" style="list-style: none; padding: 0; margin: 0;">
+                                    <li style="color: #aaffcc; background-color: #1a1a1a; padding: 8px 12px; margin-bottom: 5px; border-radius: 5px;">Senior Python Developer – Google</li>
+                                    <li style="color: #aaffcc; background-color: #1a1a1a; padding: 8px 12px; margin-bottom: 5px; border-radius: 5px;">Frontend Engineer – Meta</li>
+                                    <li style="color: #aaffcc; background-color: #1a1a1a; padding: 8px 12px; margin-bottom: 5px; border-radius: 5px;">Data Analyst – Amazon</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trending Bottom Jobs -->
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            {% for job in jobs_6 %}
+                            <div class="col-lg-4 mb-4">
+                                <div style="background-color: #1a1a1a; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0, 255, 150, 0.1);">
+                                    <img src="{{ job.image.url }}" alt="" style="width: 100%; height: 150px; object-fit: cover;">
+                                    <div style="padding: 10px;">
+                                        <span style="color: #66ff99;">{{ job.category.name }}</span>
+                                        <h5 style="margin-top: 5px;"><a href="{{ job.get_absolute_url }}" style="color: #ffffff;">{{ job.title }}</a></h5>
+                                        <p style="color: #aaffcc;">💵 Maosh: {{ job.payment }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weekly News Start -->
+    <div class="weekly-news-area py-5">
+        <div class="container">
+            <div class="section-tittle mb-4 text-center">
+                <span style="background-color: #1e3d2f; color: #aaffcc; padding: 10px 20px; border-radius: 5px; font-size: 18px;">🏆 The Best Company</span>
+            </div>
+            <div class="row">
+                <div class="col-12 d-flex flex-wrap">
+                    {% for job in jobs_15 %}
+                    <div class="weekly-single m-2" style="width: 300px; background-color: #1a1a1a; border-radius: 8px; overflow: hidden;">
+                        <img src="{{ job.image.url }}" alt="" style="width: 100%; height: 200px; object-fit: cover;">
+                        <div style="padding: 10px;">
+                            <span style="color: #66ff99;">{{ job.category.name }}</span>
+                            <h5><a href="{{ job.get_absolute_url }}" style="color: #ffffff;">{{ job.title }}</a></h5>
+                            <p style="color: #aaffcc;">💵 Maosh: {{ job.payment }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Vacancies -->
+    <div class="weekly2-news-area py-5" style="background-color: #181818;">
+        <div class="container">
+            <div class="section-tittle mb-4 text-center">
+                <span style="background-color: #1e3d2f; color: #aaffcc; padding: 10px 20px; border-radius: 5px; font-size: 18px;">🌟 Top Vacancies of the Month</span>
+            </div>
+            <div class="row">
+                {% for job in jobs_15 %}
+                <div class="col-md-4 mb-4">
+                    <div class="weekly2-single" style="background-color: #1a1a1a; border-radius: 8px; overflow: hidden;">
+                        <img src="{{ job.image.url }}" alt="" style="width: 100%; height: 200px; object-fit: cover;">
+                        <div style="padding: 10px;">
+                            <span style="color: #66ff99;">{{ job.category }}</span>
+                            <p style="color: #bbbbbb;">{{ job.publish_time }}</p>
+                            <h5><a href="{{ job.get_absolute_url }}" style="color: #ffffff;">{{ job.title }}</a></h5>
+                            <p style="color: #aaffcc;">💵 Maosh: {{ job.payment }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Section -->
+    <section class="whats-news-area py-5">
+        <div class="container">
+            <div class="section-tittle mb-4">
+                <span style="background-color: #1e3d2f; color: #aaffcc; padding: 10px 20px; border-radius: 5px; font-size: 18px;">🗂️ Categories</span>
+            </div>
+
+            <!-- Nav Tabs -->
+            <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" style="color: #000000;" id="all-tab" data-toggle="tab" href="#all" role="tab">All</a>
+                </li>
+                {% for cat in category %}
+                <li class="nav-item">
+                    <a class="nav-link" style="color: #000000;" id="cat-{{ cat.id }}-tab" data-toggle="tab" href="#cat-{{ cat.id }}" role="tab">{{ cat.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="all" role="tabpanel">
+                    <div class="row">
+                        {% for job in jobs_40 %}
+                        <div class="col-md-6 mb-4">
+                            <div class="single-what-news" style="background-color: #1a1a1a; border-radius: 8px; overflow: hidden;">
+                                <img src="{{ job.image.url }}" alt="" style="width: 100%; height: 200px; object-fit: cover;">
+                                <div style="padding: 10px;">
+                                    <span style="color: #66ff99;">{{ job.category.name }}</span>
+                                    <p style="color: #bbbbbb;">{{ job.publish_time }}</p>
+                                    <h5><a href="{{ job.get_absolute_url }}" style="color: #ffffff;">{{ job.title }}</a></h5>
+                                    <p style="color: #aaffcc;">💵 Maosh: {{ job.payment }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {% for cat in category %}
+                <div class="tab-pane fade" id="cat-{{ cat.id }}" role="tabpanel">
+                    <div class="row">
+                        {% for job in jobs_40 %}
+                        {% if job.category_id == cat.id %}
+                        <div class="col-md-6 mb-4">
+                            <div class="single-what-news" style="background-color: #1a1a1a; border-radius: 8px; overflow: hidden;">
+                                <img src="{{ job.image.url }}" alt="" style="width: 100%; height: 200px; object-fit: cover;">
+                                <div style="padding: 10px;">
+                                    <span style="color: #66ff99;">{{ job.category.name }}</span>
+                                    <p style="color: #bbbbbb;">{{ job.publish_time }}</p>
+                                    <h5><a href="{{ job.get_absolute_url }}" style="color: #ffffff;">{{ job.title }}</a></h5>
+                                    <p style="color: #aaffcc;">💵 Maosh: {{ job.payment }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+</main>
+{% endblock content %}

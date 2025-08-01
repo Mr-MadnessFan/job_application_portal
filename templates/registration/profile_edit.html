@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Registration{% endblock title %}
+{% block content %}
+<div class="container mt-5 p-4 rounded" style="background-color: #1e1e1e; color: #28a745;">
+    <h2>🔑 Login yaratish sahifasi</h2>
+    <p>Iltimos, foydalanuvchi ma’lumotlaringizni kiriting:</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+        <button type="submit" class="btn mt-2" style="background-color: #28a745; color: #000;">Login yaratish</button>
+    </form>
+    <p class="mt-3">Parolni unutdingizmi? <a href="{% url 'password_reset' %}" style="color: #28a745;">Parolni tiklash</a></p>
+</div>
+{% endblock content %}

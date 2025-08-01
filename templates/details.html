@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Job Details{% endblock title %}
+
+{% block content %}
+<main>
+    <!-- Job Details Section -->
+    <div class="py-5" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="p-4 shadow rounded bg-white">
+
+                        <!-- Categories -->
+                        <div class="mb-4">
+                            <span class="badge bg-success text-dark fs-6 me-2">
+                                Category: {{ jobs.category }}
+                            </span>
+                            <span class="badge bg-dark text-light fs-6">
+                                Subcategory: {{ jobs.need_category }}
+                            </span>
+                        </div>
+
+                        <!-- Job Image -->
+                        {% if jobs.image %}
+                        <div class="text-center mb-4">
+                            <img src="{{ jobs.image.url }}" alt="Job Image" class="img-fluid rounded" style="max-height: 400px;">
+                        </div>
+                        {% endif %}
+
+                        <!-- Job Title -->
+                        <div class="mb-4">
+                            <h2 class="fw-bold text-dark">{{ jobs.title }}</h2>
+                        </div>
+
+                        <!-- Job Info -->
+                        <div class="mb-4">
+                            <ul class="list-group list-group-flush fs-5">
+                                <li class="list-group-item"><strong>💰 Oylik:</strong> {{ jobs.payment }}</li>
+                                <li class="list-group-item"><strong>📅 Ish grafiki:</strong> {{ jobs.work_schedule }}</li>
+                                <li class="list-group-item"><strong>⏰ Ish vaqti:</strong> {{ jobs.working_time }}</li>
+                                <li class="list-group-item"><strong>💼 Ish formati:</strong> {{ jobs.work_format }}</li>
+                                <li class="list-group-item"><strong>📈 Ish tajribasi:</strong> {{ jobs.working_knowledge }}</li>
+                            </ul>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-5">
+                            <h4 class="text-success mb-3">📝 Ish tavsifi</h4>
+                            <p class="text-secondary" style="line-height: 1.7;">{{ jobs.body }}</p>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="mb-4">
+                            <h4 class="text-success mb-3">📞 Bog‘lanish ma’lumotlari</h4>
+                            <ul class="list-group list-group-flush fs-5">
+                                <li class="list-group-item"><strong>Telefon:</strong> {{ jobs.contact }}</li>
+                                <li class="list-group-item"><strong>Email:</strong> {{ jobs.email }}</li>
+                                <li class="list-group-item"><strong>Manzil:</strong> {{ jobs.address }}</li>
+                                <li class="list-group-item">
+                                    <strong>Author:</strong>
+                                    <a style="color:black;" href="{% url 'dashboard_user' jobs.author.username %}" class="text-decoration-none">{{ jobs.author }}</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Apply Button -->
+                        <div class="text-center mt-4">
+                            <a href="mailto:{{ jobs.email }}" class="btn btn-success px-5 py-3 fw-bold">
+                                📩 Murojaat qilish
+                            </a>
+                        </div>
+
+                        <!-- Action Buttons (If Authenticated) -->
+                        {% if request.user == jobs.author %}
+                        <div class="text-center mt-4">
+                            <a href="{% url 'update_page' jobs.slug %}" class="btn btn-outline-success px-4 py-2 me-2">✏️ Tahrirlash</a>
+                            <a href="{% url 'delete_page' jobs.slug %}" class="btn btn-outline-danger px-4 py-2">🗑️ O‘chirish</a>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}
